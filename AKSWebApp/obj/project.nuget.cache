@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Vts8A1Ah/Ss=",
+  "dgSpecHash": "vezCGM+1X6c=",
   "success": true,
-  "projectFilePath": "/Users/wayne-hoggett/Documents/GitHub/aks-deploy-applications/AKSWebApp/AKSWebApp.csproj",
+  "projectFilePath": "/Users/wayne-hoggett/Documents/GitHub/AKSWebApp/AKSWebApp/AKSWebApp.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
