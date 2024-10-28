@@ -4,3 +4,7 @@ resources:
 - ../../base
 nameSuffix: -production
 namespace: production
+configMapGenerator:
+- name: env-config
+  literals:
+  - ASPNETCORE_ENVIRONMENT=Production
