@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AKSWebApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+73360065976aff2464b7037b0ff29b52f512676b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c1e2f3a54f38a08fc90aef2644ecd7aeab3dbe07")]
 [assembly: System.Reflection.AssemblyProductAttribute("AKSWebApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AKSWebApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
