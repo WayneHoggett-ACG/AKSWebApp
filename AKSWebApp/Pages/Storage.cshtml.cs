@@ -26,7 +26,6 @@ public class StorageModel : PageModel
     public void OnGet()
     {
         PageTitleSuffix = _configuration["ASPNETCORE_ENVIRONMENT"];
-        Blobs = new List<string>();
     }
 
     public async Task<IActionResult> OnPostGetBlobsAsync(string storageAccountName, string blobContainer)
