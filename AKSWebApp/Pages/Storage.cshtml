@@ -32,6 +32,7 @@
 @{
     if (Model.Blobs != null)
     {
+        if (Model.Blobs.Count > 0) {
         <div class="mt-4">
             <h2>Blobs Retrieved:</h2>
             <ul>
@@ -41,5 +42,6 @@
                 }
             </ul>
         </div>
+        }
     }
 }

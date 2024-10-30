@@ -35,15 +35,15 @@ public class StorageModel : PageModel
         {
             try
             {
-                BlobServiceClient client = new(
-                    new Uri($"https://{storageAccountName}.blob.core.windows.net"),
-                    new DefaultAzureCredential());
-
-                var containerClient = client.GetBlobContainerClient(blobContainer);
+                BlobContainerClient containerClient = new(
+                new Uri($"https://{storageAccountName}.blob.core.windows.net/{blobContainer}"),
+                new DefaultAzureCredential());
 
                 var blobs = new List<string>();
 
-                await foreach (var blob in containerClient.GetBlobsAsync())
+                var retrievedBlobs = containerClient.GetBlobs();
+
+                foreach (var blob in retrievedBlobs)
                 {
                     blobs.Add(blob.Name);
                 }
