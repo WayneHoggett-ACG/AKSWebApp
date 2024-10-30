@@ -13,12 +13,12 @@
                     <form method="post" asp-page-handler="GetBlobsAsync" class="mb-4">
                         <div class="form-group mb-3">
                             <label for="storageAccountName">Storage Account Name:</label>
-                            <input type="text" name="storageAccountName" id="storageAccountName" placeholder="your-storage-account-name" required class="form-control">
+                            <input type="text" name="storageAccountName" id="storageAccountName" placeholder="storage-account-name" required class="form-control">
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="blobContainer">Blob Container Name:</label>
-                            <input type="text" name="blobContainer" id="blobContainer" placeholder="your-blob-container-name" required class="form-control">
+                            <input type="text" name="blobContainer" id="blobContainer" placeholder="blob-container-name" required class="form-control">
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-lg px-5 py-2 mt-3 mb-4">Get Blobs</button>
@@ -30,7 +30,7 @@
 </div>
 
 @{
-    if (Model.Blobs != null)
+    if (Model.Blobs.Count > 0)
     {
         <div class="mt-4">
             <h2>Blobs Retrieved:</h2>
