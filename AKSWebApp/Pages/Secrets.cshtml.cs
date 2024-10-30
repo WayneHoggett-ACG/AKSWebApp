@@ -28,6 +28,8 @@ public class SecretsModel : PageModel
 
 public async Task<IActionResult> OnPostGetSecretAsync(string secretName, string keyVaultUrl)
     {
+        PageTitleSuffix = _configuration["ASPNETCORE_ENVIRONMENT"];
+        
         if (ModelState.IsValid)
         {
             try

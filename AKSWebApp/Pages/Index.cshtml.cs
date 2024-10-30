@@ -25,28 +25,4 @@ public class IndexModel : PageModel
     {
         PageTitleSuffix = _configuration["ASPNETCORE_ENVIRONMENT"];
     }
-
-public async Task<IActionResult> OnPostGetSecretAsync(string secretName, string keyVaultUrl)
-    {
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                KeyVaultUrl = keyVaultUrl;
-
-                var client = new SecretClient(
-                    new Uri(keyVaultUrl),
-                    new DefaultAzureCredential());
-
-                KeyVaultSecret secret = await client.GetSecretAsync(secretName);
-                Secret = secret.Value;
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError("error", "Failed to retrieve secret: " + ex.Message);
-            }
-        }
-
-        return Page();
-    }
 }

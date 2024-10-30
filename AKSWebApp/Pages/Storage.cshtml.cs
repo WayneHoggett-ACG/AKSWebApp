@@ -30,6 +30,8 @@ public class StorageModel : PageModel
 
     public async Task<IActionResult> OnPostGetBlobsAsync(string storageAccountName, string blobContainer)
     {
+        PageTitleSuffix = _configuration["ASPNETCORE_ENVIRONMENT"];
+        
         if (ModelState.IsValid)
         {
             try
