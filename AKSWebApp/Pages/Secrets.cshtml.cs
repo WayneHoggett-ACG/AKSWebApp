@@ -5,13 +5,13 @@ using Azure.Security.KeyVault.Secrets;
 
 namespace AKSWebApp.Pages;
 
-public class IndexModel : PageModel
+public class SecretsModel : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    private readonly ILogger<SecretsModel> _logger;
 
     private readonly IConfiguration _configuration;
 
-    public IndexModel(ILogger<IndexModel> logger, IConfiguration configuration)
+    public SecretsModel(ILogger<SecretsModel> logger, IConfiguration configuration)
     {
         _logger = logger;
         _configuration = configuration;
