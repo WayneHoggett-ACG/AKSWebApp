@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using System.IO;
 
 namespace AKSWebApp.Pages;
 
@@ -28,8 +29,6 @@ public class SecretsModel : PageModel
 
 public async Task<IActionResult> OnPostGetSecretAsync(string secretName, string keyVaultUrl)
     {
-        PageTitleSuffix = _configuration["ASPNETCORE_ENVIRONMENT"];
-        
         if (ModelState.IsValid)
         {
             try
@@ -42,6 +41,28 @@ public async Task<IActionResult> OnPostGetSecretAsync(string secretName, string 
 
                 KeyVaultSecret secret = await client.GetSecretAsync(secretName);
                 Secret = secret.Value;
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("error", "Failed to retrieve secret: " + ex.Message);
+            }
+        }
+
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostGetCSISecretAsync(string secretMountPath)
+    {
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                if (System.IO.File.Exists(secretMountPath))
+                {
+                    var fileContent = await System.IO.File.ReadAllTextAsync(secretMountPath);
+                    Secret = fileContent;
+                }
+                
             }
             catch (Exception ex)
             {
