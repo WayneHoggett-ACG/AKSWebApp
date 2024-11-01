@@ -12,11 +12,11 @@ jobs:
         id: acr
         uses: azure/acr-build@v1
         with:
-          service_principal: ${{ secrets.service_principal }}
-          service_principal_password: ${{ secrets.service_principal_password }}
-          tenant: ${{ secrets.tenant }}
-          registry: ${{ secrets.registry }}
-          repository: ${{ secrets.repository }}
+          service_principal: ${{ secrets.SERVICE_PRINCIPAL }}
+          service_principal_password: ${{ secrets.SERVICE_PRINCIPAL_PASSWORD }}
+          tenant: ${{ secrets.TENANT }}
+          registry: ${{ secrets.REGISTRY }}
+          repository: ${{ secrets.REPOSITORY }}
           image: akswebapp
           folder: AKSWebApp
           branch: main
@@ -34,7 +34,7 @@ jobs:
         inlineScript: |
           $line = Get-Content /Manifests/deployment.yaml | Select-String image: | Select-Object -ExpandProperty Line
           $content = Get-Content Manifests/deployment.yaml
-          $content | ForEach-Object {$_ -replace $line,"        image: ${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}:${{ github.run_number }}"} | Set-Content Manifests/deployment.yaml
+          $content | ForEach-Object {$_ -replace $line,"        image: ${{ secrets.REGISTRY }}.azurecr.io/${{ secrets.REPOSITORY }}:${{ github.run_number }}"} | Set-Content Manifests/deployment.yaml
         azPSVersion: "latest"
     
     - name: Commit changes in manifest to repo
