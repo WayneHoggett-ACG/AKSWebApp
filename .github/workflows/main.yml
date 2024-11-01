@@ -1,0 +1,46 @@
+name: main
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "AKSWebApp/**"
+jobs:
+  ACRBuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ACR build
+        id: acr
+        uses: azure/acr-build@v1
+        with:
+          service_principal: ${{ secrets.service_principal }}
+          service_principal_password: ${{ secrets.service_principal_password }}
+          tenant: ${{ secrets.tenant }}
+          registry: ${{ secrets.registry }}
+          repository: ${{ secrets.repository }}
+          image: akswebapp
+          folder: AKSWebApp
+          branch: main
+  Update-K8s-Manifests:
+    name: Update K8s Deployment Manifest with Image Version
+    needs: ACRBuild
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: actions/checkout@v2
+
+    - name: Update image name in manifest file
+      uses: azure/powershell@v1
+      with:
+        inlineScript: |
+          $line = Get-Content /Manifests/deployment.yaml | Select-String image: | Select-Object -ExpandProperty Line
+          $content = Get-Content Manifests/deployment.yaml
+          $content | ForEach-Object {$_ -replace $line,"        image: ${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}:${{ github.run_number }}"} | Set-Content Manifests/deployment.yaml
+        azPSVersion: "latest"
+    
+    - name: Commit changes in manifest to repo
+      run: | 
+        git config user.name "GitHub Actions Bot"
+        git config user.email ""
+        git add Manifests/deployment.yaml
+        git commit -m "Update image version in K8s Deployment manifests file"
+        git push origin
