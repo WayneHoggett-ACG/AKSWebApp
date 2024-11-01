@@ -32,12 +32,9 @@ jobs:
       uses: azure/powershell@v1
       with:
         inlineScript: |
-          Get-ChildItem
-          Write-Output "----"
-          Get-ChildItem -Path $GITHUB_WORKSPACE/work
-          $line = Get-Content $GITHUB_WORKSPACE/work/AKSWebApp/Manifests/deployment.yaml | Select-String image: | Select-Object -ExpandProperty Line
-          $content = Get-Content $GITHUB_WORKSPACE/work/AKSWebApp/Manifests/deployment.yaml
-          $content | ForEach-Object {$_ -replace $line,"        image: ${{ secrets.REGISTRY }}.azurecr.io/${{ secrets.REPOSITORY }}:${{ github.run_number }}"} | Set-Content $GITHUB_WORKSPACE/work/AKSWebApp/Manifests/deployment.yaml
+          $line = Get-Content /home/runner/work/AKSWebApp/AKSWebApp/Manifests/deployment.yaml | Select-String image: | Select-Object -ExpandProperty Line
+          $content = Get-Content /home/runner/work/AKSWebApp/AKSWebApp/Manifests/deployment.yaml
+          $content | ForEach-Object {$_ -replace $line,"        image: ${{ secrets.REGISTRY }}.azurecr.io/${{ secrets.REPOSITORY }}:${{ github.run_number }}"} | Set-Content /home/runner/work/AKSWebApp/AKSWebApp/Manifests/deployment.yaml
         azPSVersion: "latest"
     
     - name: Commit changes in manifest to repo
