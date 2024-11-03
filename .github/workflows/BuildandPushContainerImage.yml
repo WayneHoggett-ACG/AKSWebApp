@@ -22,7 +22,7 @@ jobs:
           image: akswebapp
           folder: AKSWebApp
           branch: main
-  Update-K8s-Manifests:
+  Update-Kubernetes-Manifest:
     name: Update K8s Deployment Manifest with Image Version
     needs: ACRBuild
     runs-on: ubuntu-latest
