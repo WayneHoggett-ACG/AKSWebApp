@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - "AKSWebApp/**"
+permissions:
+  contents: write
 jobs:
   ACRBuild:
     runs-on: ubuntu-latest
@@ -32,14 +34,17 @@ jobs:
       uses: azure/powershell@v1
       with:
         inlineScript: |
-          $line = Get-Content /home/runner/work/AKSWebApp/AKSWebApp/Manifests/deployment.yaml | Select-String image: | Select-Object -ExpandProperty Line
-          $content = Get-Content /home/runner/work/AKSWebApp/AKSWebApp/Manifests/deployment.yaml
-          $content | ForEach-Object {$_ -replace $line,"        image: ${{ secrets.REGISTRY }}.azurecr.io/${{ secrets.REPOSITORY }}:${{ github.run_number }}"} | Set-Content /home/runner/work/AKSWebApp/AKSWebApp/Manifests/deployment.yaml
+          $WorkPath = Join-Path -Path ${{ env:GITHUB_WORKSPACE }} -Childpath "work"
+          Get-ChildItem -Path $WorkPath
+          $DeploymentYAML = Join-Path -Path $WorkPath -ChildPath /AKSWebApp/AKSWebApp/Manifests/deployment.yaml
+          $line = Get-Content -Path $DeploymentYAML | Select-String image: | Select-Object -ExpandProperty Line
+          $content = Get-Content $DeploymentYAML
+          $content | ForEach-Object {$_ -replace $line,"        image: ${{ secrets.REGISTRY }}.azurecr.io/${{ secrets.REPOSITORY }}:${{ github.run_number }}"} | Set-Content -Path $DeploymentYAML
         azPSVersion: "latest"
     
     - name: Commit changes in manifest to repo
       run: | 
-        git config user.name "GitHub Actions Bot"
+        git config user.name "GitHub Actions"
         git config user.email ""
         git add Manifests/deployment.yaml
         git commit -m "Update image version in K8s Deployment manifests file"
