@@ -34,9 +34,9 @@ jobs:
       uses: azure/powershell@v1
       with:
         inlineScript: |
-          $WorkPath = Join-Path -Path $env:GITHUB_WORKSPACE -Childpath "work"
+          $WorkPath = Join-Path -Path $env:GITHUB_WORKSPACE
           Get-ChildItem -Path $WorkPath
-          $DeploymentYAML = Join-Path -Path $WorkPath -ChildPath /AKSWebApp/AKSWebApp/Manifests/deployment.yaml
+          $DeploymentYAML = Join-Path -Path $WorkPath -ChildPath Manifests/deployment.yaml
           $line = Get-Content -Path $DeploymentYAML | Select-String image: | Select-Object -ExpandProperty Line
           $content = Get-Content $DeploymentYAML
           $content | ForEach-Object {$_ -replace $line,"        image: ${{ secrets.REGISTRY }}.azurecr.io/${{ secrets.REPOSITORY }}:${{ github.run_number }}"} | Set-Content -Path $DeploymentYAML
