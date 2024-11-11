@@ -1,3 +1,3 @@
-# AKSWebApp
+# Repository has moved
 
-Test Azure Kubernetes Service (AKS) functionality with this .Net Web App.
+Please refer to: [github.com/pluralsight-cloud/aks-deploy-applications](https://github.com/pluralsight-cloud/aks-deploy-applications)
